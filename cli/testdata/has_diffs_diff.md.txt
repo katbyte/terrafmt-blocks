@@ -15,3 +15,8 @@
  }
 <red>-  </>
 <green>+</>
+<lightMagenta>testdata/has_diffs.md</><darkGray>:</><magenta>29</>
+<red>-     resource "aws_s3_bucket" "leading-space" {</>
+<green>+resource "aws_s3_bucket" "leading-space" {</>
+   bucket = "tf-test-bucket-leading-space"
+ }

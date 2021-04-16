@@ -10,7 +10,55 @@
 <green>+  bucket = "tf-test-bucket-extra-space-%d"</>
  }
 <lightMagenta>testdata/has_diffs.go</><darkGray>:</><magenta>42</>
-<red>-     resource "aws_s3_bucket" "leading-space" {</>
+ resource "aws_alb_target_group" "test" {
+<red>-  name = "%s"</>
+<red>-  port = 443</>
+<green>+  name     = "%s"</>
+<green>+  port     = 443</>
+   protocol = "HTTPS"
+<red>-  vpc_id = "${aws_vpc.test.id}"</>
+<green>+  vpc_id   = "${aws_vpc.test.id}"</>
+ 
+   deregistration_delay = 200
+ 
+   stickiness {
+<red>-    type = "lb_cookie"</>
+<green>+    type            = "lb_cookie"</>
+     cookie_duration = 10000
+   }
+ 
+   health_check {
+<red>-    path = "/health"</>
+<red>-    interval = 60</>
+<red>-    port = 8081</>
+<red>-    protocol = "HTTP"</>
+<red>-    timeout = 3</>
+<red>-    healthy_threshold = 3</>
+<green>+    path                = "/health"</>
+<green>+    interval            = 60</>
+<green>+    port                = 8081</>
+<green>+    protocol            = "HTTP"</>
+<green>+    timeout             = 3</>
+<green>+    healthy_threshold   = 3</>
+     unhealthy_threshold = 3
+<red>-    matcher = "200-299"</>
+<green>+    matcher             = "200-299"</>
+   }
+ 
+   tags = {
+     TestName = "TestAccAWSALBTargetGroup_basic"
+   }
+ }
+ 
+ resource "aws_vpc" "test" {
+   cidr_block = "10.0.0.0/16"
+ 
+   tags = {
+     Name = "terraform-testacc-alb-target-group-basic"
+   }
+ }
+<lightMagenta>testdata/has_diffs.go</><darkGray>:</><magenta>81</>
+<red>-    resource "aws_s3_bucket" "leading-space" {</>
 <green>+resource "aws_s3_bucket" "leading-space" {</>
    bucket = "tf-test-bucket-leading-space-%d"
  }

@@ -158,16 +158,77 @@ data "google_dns_managed_zone" "qa" {
 
 		{
 			name: "assigned",
-			block: `resource "google_project" "acceptance" {
-  project_id = %s
-  name       = %s
-  org_id     = %s
+			block: `resource "aws_alb_target_group" "test" {
+  name = "%s"
+  port = 443
+  protocol = "HTTPS"
+  vpc_id = "${aws_vpc.test.id}"
+
+  deregistration_delay = 200
+
+  stickiness {
+    type = "lb_cookie"
+    cookie_duration = 10000
+  }
+
+  health_check {
+    path = "/health"
+    interval = 60
+    port = 8081
+    protocol = "HTTP"
+    timeout = 3
+    healthy_threshold = 3
+    unhealthy_threshold = 3
+    matcher = "200-299"
+  }
+
+  tags = {
+    TestName = "TestAccAWSALBTargetGroup_basic"
+  }
 }
-`,
-			expected: `resource "google_project" "acceptance" {
-  project_id = %s
-  name       = %s
-  org_id     = %s
+
+resource "aws_vpc" "test" {
+  cidr_block = "10.0.0.0/16"
+
+  tags = {
+    Name = "terraform-testacc-alb-target-group-basic"
+  }
+}`,
+			expected: `resource "aws_alb_target_group" "test" {
+  name     = "%s"
+  port     = 443
+  protocol = "HTTPS"
+  vpc_id   = aws_vpc.test.id
+
+  deregistration_delay = 200
+
+  stickiness {
+    type            = "lb_cookie"
+    cookie_duration = 10000
+  }
+
+  health_check {
+    path                = "/health"
+    interval            = 60
+    port                = 8081
+    protocol            = "HTTP"
+    timeout             = 3
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
+    matcher             = "200-299"
+  }
+
+  tags = {
+    TestName = "TestAccAWSALBTargetGroup_basic"
+  }
+}
+
+resource "aws_vpc" "test" {
+  cidr_block = "10.0.0.0/16"
+
+  tags = {
+    Name = "terraform-testacc-alb-target-group-basic"
+  }
 }
 `,
 		},

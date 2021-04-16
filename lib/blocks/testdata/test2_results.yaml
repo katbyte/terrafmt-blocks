@@ -1,9 +1,0 @@
-expected_results:
-  - |
-    resource "aws_s3_bucket" "hcl" {
-      bucket = "tf-test-bucket-hcl"
-    }
-  - |
-    resource "aws_s3_bucket" "tf" {
-      bucket = "tf-test-bucket-tf"
-    }

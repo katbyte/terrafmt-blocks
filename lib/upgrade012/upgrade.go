@@ -64,6 +64,7 @@ func Block(ctx context.Context, tfPath string, log *logrus.Logger, b string) (st
 	if strings.HasSuffix(fb, "\n\n") {
 		fb = strings.TrimSuffix(fb, "\n")
 	}
+	// fb := strings.TrimSuffix(string(raw), "\n")
 
 	return fb, nil
 }

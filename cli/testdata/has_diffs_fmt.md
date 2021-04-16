@@ -25,3 +25,9 @@ resource "aws_s3_bucket" "end-line" {
 }
 
 ```
+
+```hcl
+resource "aws_s3_bucket" "leading-space" {
+  bucket = "tf-test-bucket-leading-space"
+}
+```

@@ -156,14 +156,14 @@ resource "resource" "test" {
 			block: `
 resource  "resource"    "test" {
 	kat = %s
-mega = %d
+mega = "%s"
     byte =   %d
 } 
 `,
 			expected: `
 resource "resource" "test" {
   kat  = %s
-  mega = %d
+  mega = "%s"
   byte = %d
 }
 `,
